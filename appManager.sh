@@ -29,9 +29,13 @@ add_appimage() {
 list_appimages() {
     clear
     echo "AppImages:"
-    for name in "${!appimages[@]}"; do
-        echo "$name"
-    done
+    if [ ${#appimages[@]} -eq 0 ]; then
+        echo "No AppImages found."
+    else
+        for name in "${!appimages[@]}"; do
+            echo "$name"
+        done
+    fi
 }
 
 run_appimage() {
@@ -60,7 +64,8 @@ while true; do
 
     case $choice in
         1) add_appimage ;;
-        2) list_appimages ;;
+        2) list_appimages
+           read -n 1 -s -r -p "Press any key to continue..." ;;
         3) run_appimage ;;
         4) exit ;;
         *) echo "Invalid choice" ;;
